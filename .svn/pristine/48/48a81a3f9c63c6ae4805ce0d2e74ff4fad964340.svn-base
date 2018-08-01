@@ -1,0 +1,66 @@
+package cn.edu.jxau.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.edu.jxau.common.entity.Member;
+import cn.edu.jxau.dao.mapper.MemberMapper;
+import cn.edu.jxau.dao.mapper.MembersMapper;
+import cn.edu.jxau.service.MemberService;
+import cn.edu.jxau.web.exception.CustomException;
+
+@Service
+public class MemberServiceImpl implements MemberService {
+
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
+	private MembersMapper membersMapper;
+
+	@Override
+	public void addMember(Member member) throws CustomException {
+		try {
+			memberMapper.insert(member);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new CustomException("添加失败!");
+		}
+	}
+
+	@Override
+	public List<Member> queryMemberByUserId(Long userId) throws CustomException {
+		List<Member> members = null;
+		if (userId != null) {
+			Member member = new Member();
+			member.setUserId(userId);
+			members = membersMapper.selectMember(member);
+		}
+		return members;
+	}
+
+	@Override
+	public Member queryMember(Long memberId) throws CustomException {
+		Member member = memberMapper.selectByPrimaryKey(memberId);
+		// 处理异常
+		if (member == null) {
+			throw new CustomException("查询的用户" + memberId + "不存在");
+		}
+		return member;
+	}
+
+	@Override
+	@Transactional
+	public void upateMember(Member member) throws CustomException {
+		memberMapper.updateByPrimaryKeySelective(member);
+	}
+
+	@Override
+	public void removeMember(Long memberId) throws CustomException {
+		memberMapper.deleteByPrimaryKey(memberId);
+	}
+
+}

@@ -1,0 +1,106 @@
+package cn.edu.jxau.common.entity;
+
+import java.util.Date;
+
+/**
+ * User -> user
+ * 2018-02-11
+ */
+@lombok.Getter
+@lombok.Setter
+@lombok.EqualsAndHashCode(callSuper = false)
+public class User extends BaseEntity {
+    private Long userId;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 密码，进行加密后的
+     */
+    private String password;
+
+    /**
+     * 进行加密的盐值
+     */
+    private String salt;
+
+    /**
+     * 电话号码
+     */
+    private String tel;
+
+    /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
+     * 1:表示男，0：表示女
+     */
+    private Integer sex;
+
+    /**
+     * 院系
+     */
+    private String academy;
+
+    /**
+     * 专业
+     */
+    private String major;
+
+    /**
+     * 班级
+     */
+    private String classs;
+
+    /**
+     * 学号
+     */
+    private Integer studentNumber;
+
+    /**
+     * 账号状态，正常在线对应1，正常离线对应2，冻结对应0
+     */
+    private Integer accountStatus;
+
+    /**
+     * 入学年份
+     */
+    private Integer startyear;
+
+    /**
+     * 0:未报名，1：已报名
+     */
+    private Integer enrollType;
+
+    /**
+     * 0:未提交，1：已提交，2：表示不能提交
+     */
+    private Integer submitStatus;
+
+    /**
+     * 角色id,1:表示普通用户，2：评委老师，3：表示管理员，4：表示超级管理员
+     */
+    private Long roleId;
+
+    /**
+     * 冻结状态，1：表示冻结，0：表示未冻结
+     */
+    private Integer frozenType;
+
+    /**
+     * 创建时间
+     */
+    private Date gmtCreate;
+
+    /**
+     * 最后修改时间
+     */
+    private Date gmtModified;
+
+    private static final long serialVersionUID = 1L;
+}

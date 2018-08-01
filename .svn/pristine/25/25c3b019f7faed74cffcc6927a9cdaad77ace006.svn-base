@@ -1,0 +1,142 @@
+package cn.edu.jxau.web.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import cn.edu.jxau.common.entity.Member;
+import cn.edu.jxau.common.entity.User;
+import cn.edu.jxau.common.entity.UserActive;
+import cn.edu.jxau.common.utils.EncryptUtil;
+import cn.edu.jxau.service.MemberService;
+import cn.edu.jxau.service.UserService;
+import cn.edu.jxau.web.core.BaseController;
+import cn.edu.jxau.web.util.ValidUtils;
+import cn.edu.jxau.web.util.VerifyCodeUtils;
+
+@Controller
+@RequestMapping("/user")
+public class UserController extends BaseController{
+
+	private final static String USER_SESSION = "user_session";
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private MemberService memberService;
+
+	/*
+     * 输入校验 1，创建一个Map,用来封装错误信息，其中key为表单字段名称，值为错误信息
+     */
+    private Map<String, String> errors = new HashMap<String, String>();
+    
+
+	@RequestMapping("/login")
+	public @ResponseBody Object login(String username, String password, String vcode, String rememberMe, HttpServletRequest req) {
+
+		// 登录验证
+		if (!ValidUtils.loginVerify(username, password, vcode, req)) {
+			return renderError("信息不为空或者格式错误");
+		}
+		
+//		Subject subject= SecurityUtils.getSubject();  
+//        if (subject.isAuthenticated()) {  
+//            return;  
+//        }  
+//        //如果用户已登录，先踢出  
+//        ShiroSecurityHelper.kickOutUser(user.getUsername()); 
+        
+		User loginUser = new User();
+		loginUser.setEmail(username);
+		try {
+			loginUser = userService.findUserByEmail(username);
+
+			// 判断密码是否正确
+			if (!EncryptUtil.md5Encode(password, loginUser.getPassword(), loginUser.getSalt())) {
+				return renderError("密码错误");
+			}
+			
+			// 是否记住我
+			boolean rememberMe1 = false;
+			if("true".equals(rememberMe)) {
+				rememberMe1 = true;
+			}
+			Subject currentUser = SecurityUtils.getSubject();
+			if (!currentUser.isAuthenticated()) {
+				UsernamePasswordToken token = new UsernamePasswordToken(username, loginUser.getPassword(), rememberMe1);
+				currentUser.login(token);
+			}
+		} catch (AuthenticationException e) {
+			// logger.warn(e.getMessage());
+			throw e;
+		}
+
+		// 将密码设置为null，确保安全
+		loginUser.setPassword(null);
+		loginUser.setSalt(null);
+
+		saveSessionUser(loginUser, req.getSession());
+		return renderSuccess(loginUser.getUserName() + "登录成功");
+	}
+    
+    
+	
+	@RequestMapping("/findUserList")
+	@RequiresPermissions("/user/findUserList") // 执行findUserList方法需要/user/findUserList权限
+    public String findUserList(Model model, HttpServletRequest request) throws Exception {
+    	if(userService == null) {
+    		System.out.println("null");
+    	}else {
+    		List<User> userList = userService.findUserList();
+    		if(userList != null) {
+    			model.addAttribute("userList", userList);
+    		}
+    	}
+        return "user/listUser";
+    }
+	
+	@RequestMapping("/findUserInfo")
+	@RequiresPermissions("/user/findUserInfo")
+    public void findUserInfo(Model model, HttpServletRequest request) throws Exception {
+    	if(userService == null) {
+    		System.out.println("null");
+    	}else {
+    		User userInfo = userService.findUserById(getUserId());
+    		if(userInfo != null) {
+    			model.addAttribute("user", userInfo);
+    		}
+    	}
+    	//如果页面名和请求名一致可不写，默认转发
+//    	return "user/findUserInfo";
+    }
+	
+	private void saveSessionUser(User user, HttpSession session) {
+		UserActive userActive = new UserActive();
+		Long userId = user.getUserId();
+		List<Member> members = memberService.queryMemberByUserId(userId);
+		userActive.setUser(user);
+		userActive.setMembers(members);
+		userActive.setId(userId);
+		userActive.setLoginName(user.getUserName());
+		
+		// 把验证码去除
+		session.removeAttribute(VerifyCodeUtils.V_CODE);
+		// 存储用户信息
+		session.setAttribute(USER_SESSION, userActive);
+	}
+}

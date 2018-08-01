@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.MembersMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Member">
+    <id column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="member_academy" jdbcType="VARCHAR" property="memberAcademy" />
+    <result column="member_major" jdbcType="VARCHAR" property="memberMajor" />
+    <result column="member_classs" jdbcType="VARCHAR" property="memberClasss" />
+    <result column="member_tel" jdbcType="VARCHAR" property="memberTel" />
+    <result column="member_email" jdbcType="VARCHAR" property="memberEmail" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="member_role" jdbcType="BIT" property="memberRole" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    member_id, member_name, member_academy, member_major, member_classs, member_tel, 
+    member_email, user_id, member_role, gmt_create, gmt_modified
+  </sql>
+  <!-- 根据用户的属性查找用户 -->
+  <select id="selectMember" parameterType="cn.edu.jxau.common.entity.Member" resultMap="BaseResultMap">
+    SELECT
+	<include refid="Base_Column_List" />
+	FROM member
+	<where>
+      <if test="memberName != null">
+        AND member_name = #{memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="memberAcademy != null">
+        AND member_academy = #{memberAcademy,jdbcType=VARCHAR}
+      </if>
+      <if test="memberMajor != null">
+        AND member_major = #{memberMajor,jdbcType=VARCHAR}
+      </if>
+      <if test="memberClasss != null">
+        AND member_classs = #{memberClasss,jdbcType=VARCHAR}
+      </if>
+      <if test="memberTel != null">
+        AND member_tel = #{memberTel,jdbcType=VARCHAR}
+      </if>
+      <if test="memberEmail != null">
+        AND member_email = #{memberEmail,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+        AND user_id = #{userId,jdbcType=BIGINT}
+      </if>
+      <if test="gmtCreate != null">
+        AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="gmtModified != null">
+        AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  
+</mapper>

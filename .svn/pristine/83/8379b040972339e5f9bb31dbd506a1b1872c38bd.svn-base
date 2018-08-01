@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="${base}/assets/libs/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<title>江西农业大学软件创新大赛</title>
+</head>
+<body role="document">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a
+						href="${pageContext.request.contextPath}/index/index.html">首 页</a></li>
+					<!--<li><a href="#about">报名流程</a></li>-->
+					<!--<li><a href="#contact">注册队伍</a></li>-->
+					<li><a href="${base}/">个人主页</a></li>
+					<li><a href="${base}/logout">注销</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+	<div class="container theme-showcase" role="main">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="page-header">
+					<br /> <br />
+					<h2 align="center">
+						<font size="6" color="#000000">成员信息</font>
+					</h2>
+				</div>
+				<!--  onsubmit="return manageAdd.add();" -->
+				<form action="${base}/member/modifyMember" method="post">
+				<input type="hidden" name="memberId" value="${member.memberId}">
+					<div class="form-group ">
+						<label for="name">姓名</label> <input name="memberName" type="text"
+							class="form-control" id="name" value="${member.memberName}"> <span id="errorName"
+							style="color: red;">${adderrors.name }</span>
+					</div>
+					<div class="form-group ">
+						<div class="dropdown">
+							<label for="academy">院系</label> <select name="memberAcademy"
+								id="academy" class="form-control">
+								<option>${member.memberAcademy}</option>
+							</select> <span id="errorAcademy" style="color: red;">${adderrors.academy
+								}</span>
+						</div>
+					</div>
+					<div class="form-group ">
+						<label for="major">专业</label>
+						<!-- <input name="major" type="text"
+							class="form-control" id="major"> -->
+						<select name="memberMajor" id="major" class="form-control">
+							<option>${member.memberMajor}</option>
+						</select> <span id="errorMajor" style="color: red;">${adderrors.major
+							}</span>
+					</div>
+					<div class="form-group ">
+						<label for="classs">班级</label> <input name="memberClasss"
+							type="text" class="form-control" id="classs" value="${member.memberClasss}"
+							maxlength="4"> <span id="errorClass" style="color: red;">${adderrors.classs
+							}</span>
+					</div>
+
+					<div class="form-group ">
+						<label for="tel">联系电话</label> <input name="memberTel" type="text"
+							class="form-control" id="tel" maxlength="11" value="${member.memberTel}">
+						<span id="errorTel" style="color: red;">${adderrors.tel }</span>
+					</div>
+
+					<div class="form-group ">
+						<label for="email">邮箱</label> <input name="memberEmail"
+							type="email" class="form-control" id="email" value="${member.memberEmail}" />
+						<span id="errorSpan" style="color: red;">${msg}</span> <span
+							id="errorSpan" style="color: red;">${adderrors.email }</span>
+					</div>
+
+
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit">确定</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="${base}/assets/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="${base}/assets/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+</html>

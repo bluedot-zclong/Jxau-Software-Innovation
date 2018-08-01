@@ -1,0 +1,107 @@
+package cn.edu.jxau.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import cn.edu.jxau.common.entity.Function;
+import cn.edu.jxau.common.entity.Role;
+import cn.edu.jxau.common.entity.User;
+import cn.edu.jxau.dao.mapper.RoleMapper;
+import cn.edu.jxau.dao.mapper.UserMapper;
+import cn.edu.jxau.dao.mapper.UserRoleFunctionMapper;
+import cn.edu.jxau.dao.mapper.UsersMapper;
+import cn.edu.jxau.service.UserService;
+import cn.edu.jxau.web.exception.CustomException;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	private UserMapper userMapper;
+	@Autowired
+	private UsersMapper usersMapper;
+	@Autowired
+	private UserRoleFunctionMapper userRoleFunctionMapper;
+	@Autowired
+	private RoleMapper roleMapper;
+	
+	@Override
+	@Cacheable(value="user", key="#userId") // 对用户信息缓存
+	public User findUserById(Long userId) throws CustomException {
+		User userInfo = userMapper.selectByPrimaryKey(userId);
+		//处理异常
+		if(userInfo == null) {
+			throw new CustomException("查询的用户" + userId + "不存在");
+		}
+		return userInfo;
+	}
+	
+	@Override
+	public List<User> findUserList() {
+		
+		return usersMapper.findUserList();
+	}
+
+	@Override
+	public User login(User loginUser) {
+		List<User> userlist = usersMapper.select(loginUser);
+		if(userlist.size() != 1) {
+			throw new CustomException("用户名或密码错误!");
+		}
+		
+		User user = userlist.get(0);
+		if(!user.getPassword().equals(loginUser.getPassword())) {
+			throw new CustomException("密码错误!");
+		}
+		return user;
+	}
+
+	@Override
+	public void register(User userInfo) throws CustomException {
+		try {
+			userMapper.insert(userInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException("注册失败!");
+		}
+	}
+
+	/**
+	 * 修改用户信息
+	 */
+	@Override
+	@Transactional
+    @CacheEvict(value = "user", key = "#userId") // 更新缓存
+	public void upateUser(Long userId, User userFrom) throws CustomException {
+		userMapper.updateByPrimaryKeySelective(userFrom);
+	}
+	
+	/**
+	 * 根据邮箱查询用户是否存在，用于shiro的登录认证
+	 */
+	@Override
+	public User findUserByEmail(String email) {
+		User userInfo = usersMapper.selectByEmail(email);
+		return userInfo;
+	}
+
+	/**
+	 * 根据用户id查询用户的功能权限，用于shiro的权限认证
+	 */
+	@Override
+	public List<Function> selectFunctionByUserId(Long userId) throws CustomException {
+		List<Function> functions = userRoleFunctionMapper.selectFunctionByUserId(userId);
+		return functions;
+	}
+
+	@Override
+	public List<Role> selectRoleByUserId(Long roleId) throws CustomException {
+		List<Role> roles = (List<Role>) roleMapper.selectByPrimaryKey(roleId);
+		return roles;
+	}
+}

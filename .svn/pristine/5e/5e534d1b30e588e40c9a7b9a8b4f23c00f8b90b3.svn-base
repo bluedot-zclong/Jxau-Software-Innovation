@@ -1,0 +1,38 @@
+package cn.edu.jxau.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.edu.jxau.common.entity.Production;
+import cn.edu.jxau.common.entity.User;
+import cn.edu.jxau.dao.mapper.ProductionMapper;
+import cn.edu.jxau.dao.mapper.UserMapper;
+import cn.edu.jxau.service.CompetitionService;
+import cn.edu.jxau.web.exception.CustomException;
+
+public class CompetitionServiceImpl implements CompetitionService{
+
+	@Autowired
+	private UserMapper userMapper;
+	@Autowired
+	private ProductionMapper productionMapper;
+	
+	/**
+	 * 报名大赛
+	 * 根据userId修改用户报名状态
+	 */
+	@Override
+	public void signUp(User user) throws CustomException {
+		userMapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public void uploadWorks(Production production) {
+		productionMapper.insertSelective(production);
+	}
+
+	@Override
+	public Production queryProduction() {
+		return null;
+	}
+
+}

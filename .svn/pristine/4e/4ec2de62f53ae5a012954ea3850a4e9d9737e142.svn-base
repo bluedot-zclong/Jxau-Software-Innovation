@@ -1,0 +1,13 @@
+## 视图配置
+
+# UserController
+register=/user/register
+login=/user/login
+info=/user/info
+modifyPassword=/user/modifyPassword
+userInfo=/user/userInfo
+
+# error page
+404=/error/404
+403=/error/403
+500=/error/500

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.ConsultMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Consult">
+    <id column="consult_id" jdbcType="BIGINT" property="consultId" />
+    <result column="consult_content" jdbcType="VARCHAR" property="consultContent" />
+    <result column="consult_name" jdbcType="VARCHAR" property="consultName" />
+    <result column="reply_content" jdbcType="VARCHAR" property="replyContent" />
+    <result column="reply_name" jdbcType="VARCHAR" property="replyName" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    consult_id, consult_content, consult_name, reply_content, reply_name, gmt_create, 
+    gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from consult
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from consult
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Consult">
+    insert into consult (consult_id, consult_content, consult_name, 
+      reply_content, reply_name, gmt_create, 
+      gmt_modified)
+    values (#{consultId,jdbcType=BIGINT}, #{consultContent,jdbcType=VARCHAR}, #{consultName,jdbcType=VARCHAR}, 
+      #{replyContent,jdbcType=VARCHAR}, #{replyName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Consult">
+    insert into consult
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="consultId != null">
+        consult_id,
+      </if>
+      <if test="consultContent != null">
+        consult_content,
+      </if>
+      <if test="consultName != null">
+        consult_name,
+      </if>
+      <if test="replyContent != null">
+        reply_content,
+      </if>
+      <if test="replyName != null">
+        reply_name,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="consultId != null">
+        #{consultId,jdbcType=BIGINT},
+      </if>
+      <if test="consultContent != null">
+        #{consultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="consultName != null">
+        #{consultName,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null">
+        #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replyName != null">
+        #{replyName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Consult">
+    update consult
+    <set>
+      <if test="consultContent != null">
+        consult_content = #{consultContent,jdbcType=VARCHAR},
+      </if>
+      <if test="consultName != null">
+        consult_name = #{consultName,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null">
+        reply_content = #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replyName != null">
+        reply_name = #{replyName,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Consult">
+    update consult
+    set consult_content = #{consultContent,jdbcType=VARCHAR},
+      consult_name = #{consultName,jdbcType=VARCHAR},
+      reply_content = #{replyContent,jdbcType=VARCHAR},
+      reply_name = #{replyName,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where consult_id = #{consultId,jdbcType=BIGINT}
+  </update>
+</mapper>

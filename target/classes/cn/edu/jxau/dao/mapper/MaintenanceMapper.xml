@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.MaintenanceMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Maintenance">
+    <id column="maintenance_id" jdbcType="BIGINT" property="maintenanceId" />
+    <result column="maintenance_name" jdbcType="VARCHAR" property="maintenanceName" />
+    <result column="maintenance_type" jdbcType="BIT" property="maintenanceType" />
+    <result column="maintenance_content" jdbcType="VARCHAR" property="maintenanceContent" />
+    <result column="maintenance_describe" jdbcType="VARCHAR" property="maintenanceDescribe" />
+    <result column="maintenance_file_address" jdbcType="VARCHAR" property="maintenanceFileAddress" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    maintenance_id, maintenance_name, maintenance_type, maintenance_content, maintenance_describe, 
+    maintenance_file_address, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from maintenance
+    where maintenance_id = #{maintenanceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from maintenance
+    where maintenance_id = #{maintenanceId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Maintenance">
+    insert into maintenance (maintenance_id, maintenance_name, maintenance_type, 
+      maintenance_content, maintenance_describe, 
+      maintenance_file_address, gmt_create, gmt_modified
+      )
+    values (#{maintenanceId,jdbcType=BIGINT}, #{maintenanceName,jdbcType=VARCHAR}, #{maintenanceType,jdbcType=BIT}, 
+      #{maintenanceContent,jdbcType=VARCHAR}, #{maintenanceDescribe,jdbcType=VARCHAR}, 
+      #{maintenanceFileAddress,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Maintenance">
+    insert into maintenance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="maintenanceId != null">
+        maintenance_id,
+      </if>
+      <if test="maintenanceName != null">
+        maintenance_name,
+      </if>
+      <if test="maintenanceType != null">
+        maintenance_type,
+      </if>
+      <if test="maintenanceContent != null">
+        maintenance_content,
+      </if>
+      <if test="maintenanceDescribe != null">
+        maintenance_describe,
+      </if>
+      <if test="maintenanceFileAddress != null">
+        maintenance_file_address,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="maintenanceId != null">
+        #{maintenanceId,jdbcType=BIGINT},
+      </if>
+      <if test="maintenanceName != null">
+        #{maintenanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceType != null">
+        #{maintenanceType,jdbcType=BIT},
+      </if>
+      <if test="maintenanceContent != null">
+        #{maintenanceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceDescribe != null">
+        #{maintenanceDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceFileAddress != null">
+        #{maintenanceFileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Maintenance">
+    update maintenance
+    <set>
+      <if test="maintenanceName != null">
+        maintenance_name = #{maintenanceName,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceType != null">
+        maintenance_type = #{maintenanceType,jdbcType=BIT},
+      </if>
+      <if test="maintenanceContent != null">
+        maintenance_content = #{maintenanceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceDescribe != null">
+        maintenance_describe = #{maintenanceDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="maintenanceFileAddress != null">
+        maintenance_file_address = #{maintenanceFileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where maintenance_id = #{maintenanceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Maintenance">
+    update maintenance
+    set maintenance_name = #{maintenanceName,jdbcType=VARCHAR},
+      maintenance_type = #{maintenanceType,jdbcType=BIT},
+      maintenance_content = #{maintenanceContent,jdbcType=VARCHAR},
+      maintenance_describe = #{maintenanceDescribe,jdbcType=VARCHAR},
+      maintenance_file_address = #{maintenanceFileAddress,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where maintenance_id = #{maintenanceId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.User">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="BIT" property="sex" />
+    <result column="academy" jdbcType="VARCHAR" property="academy" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="classs" jdbcType="VARCHAR" property="classs" />
+    <result column="student_number" jdbcType="INTEGER" property="studentNumber" />
+    <result column="account_status" jdbcType="INTEGER" property="accountStatus" />
+    <result column="startyear" jdbcType="INTEGER" property="startyear" />
+    <result column="enroll_type" jdbcType="INTEGER" property="enrollType" />
+    <result column="submit_status" jdbcType="INTEGER" property="submitStatus" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="frozen_type" jdbcType="INTEGER" property="frozenType" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, email, `password`, salt, tel, user_name, sex, academy, major, classs, student_number, 
+    account_status, startyear, enroll_type, submit_status, role_id, frozen_type, gmt_create, 
+    gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.User">
+    insert into user (user_id, email, `password`, 
+      salt, tel, user_name, 
+      sex, academy, major, classs, 
+      student_number, account_status, startyear, 
+      enroll_type, submit_status, role_id, 
+      frozen_type, gmt_create, gmt_modified
+      )
+    values (#{userId,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=BIT}, #{academy,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{classs,jdbcType=VARCHAR}, 
+      #{studentNumber,jdbcType=INTEGER}, #{accountStatus,jdbcType=INTEGER}, #{startyear,jdbcType=INTEGER}, 
+      #{enrollType,jdbcType=INTEGER}, #{submitStatus,jdbcType=INTEGER}, #{roleId,jdbcType=BIGINT}, 
+      #{frozenType,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="academy != null">
+        academy,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="classs != null">
+        classs,
+      </if>
+      <if test="studentNumber != null">
+        student_number,
+      </if>
+      <if test="accountStatus != null">
+        account_status,
+      </if>
+      <if test="startyear != null">
+        startyear,
+      </if>
+      <if test="enrollType != null">
+        enroll_type,
+      </if>
+      <if test="submitStatus != null">
+        submit_status,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="frozenType != null">
+        frozen_type,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="academy != null">
+        #{academy,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="classs != null">
+        #{classs,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNumber != null">
+        #{studentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="accountStatus != null">
+        #{accountStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startyear != null">
+        #{startyear,jdbcType=INTEGER},
+      </if>
+      <if test="enrollType != null">
+        #{enrollType,jdbcType=INTEGER},
+      </if>
+      <if test="submitStatus != null">
+        #{submitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="frozenType != null">
+        #{frozenType,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.User">
+    update user
+    <set>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="academy != null">
+        academy = #{academy,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="classs != null">
+        classs = #{classs,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNumber != null">
+        student_number = #{studentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="accountStatus != null">
+        account_status = #{accountStatus,jdbcType=INTEGER},
+      </if>
+      <if test="startyear != null">
+        startyear = #{startyear,jdbcType=INTEGER},
+      </if>
+      <if test="enrollType != null">
+        enroll_type = #{enrollType,jdbcType=INTEGER},
+      </if>
+      <if test="submitStatus != null">
+        submit_status = #{submitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="frozenType != null">
+        frozen_type = #{frozenType,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.User">
+    update user
+    set email = #{email,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      academy = #{academy,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      classs = #{classs,jdbcType=VARCHAR},
+      student_number = #{studentNumber,jdbcType=INTEGER},
+      account_status = #{accountStatus,jdbcType=INTEGER},
+      startyear = #{startyear,jdbcType=INTEGER},
+      enroll_type = #{enrollType,jdbcType=INTEGER},
+      submit_status = #{submitStatus,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=BIGINT},
+      frozen_type = #{frozenType,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

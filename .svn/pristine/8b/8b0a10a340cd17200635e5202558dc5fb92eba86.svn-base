@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="${base}/assets/libs/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="${base}/assets/css/worksSubmit.css" rel="stylesheet">
+
+<title>报名系统 - 江西农业大学大学生软件设计大赛</title>
+</head>
+<body role="document">
+
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">首 页</a></li>
+					<!--<li><a href="#about">报名流程</a></li>-->
+					<!--<li><a href="#contact">注册队伍</a></li>-->
+					<li><a href="${base}/logout">注销</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+	<div id="container" class="container theme-showcase" role="main">
+		<div class="row">
+			<div class="col-md-2 sidebar">
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<ul class="nav nav-pills nav-stacked" id="admin-nav">
+					<li><a href="${base}/">报名信息</a></li>
+					<li role="presentation" class="active"><a href="#">作品提交</a></li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<br /> <br /> <br /> <br />
+				<div class="page-header">
+					<h2>作品提交</h2>
+				</div>
+				<form action="${base}/user/uploadWorks" method="post"
+					enctype="multipart/form-data">
+				<input type="hidden" name="token" value="${token}" />  
+
+					<div class="form-group">
+						<label for="problem">作品类别</label> <select class="form-control"
+							name="productionType">
+							<option value="C语言类" selected="selected">C语言类</option>
+							<option value="软件设计类">软件设计类</option>
+							<option value="动漫媒体类">动漫媒体类</option>
+						</select>
+					</div>
+					<br />
+
+					<div class="form-group">
+						<label for="teamname">作品名称</label> <input type="text"
+							class="form-control" name="productionName" id="filename"> <span
+							id="errorFilename" style="color: red;"font-weight: 900"></span>
+					</div>
+
+					<br />
+					
+					<div class="form-group">
+						<label for="teamname">作品介绍</label> <input type="text"
+							class="form-control" name="productionContent" id="productionContent"> <span
+							id="errorFilename" style="color: red;"font-weight: 900"></span>
+					</div>
+
+					<br />
+
+					<div class="form-group">
+						<label for="exampleInputFile">上传作品</label> <font color="#d9534f">
+							<p>
+								<small>* 作品中必须包含说明文档，视频(视频不能超过五分钟)，上传的格式必须为.zip或者.rar</small>
+							</p>
+						</font> <input id="uploadFile" placeholder="作品上传" disabled="disabled"
+							style="width: 250px; height: 30px;" />
+						<div class="fileUpload btn btn-primary">
+							<span>选择文件</span> <input id="exampleInputFile" type="file"
+								class="upload" name="fileData" />
+						</div>
+						<span id="errorExampleInputFile" style="color: red;"font-weight: 900"></span>
+					</div>
+					<br />
+					<button type="submit" class="btn btn-primary">提交</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="msg" value="${msg}" id="msg">
+	<script type="text/javascript"
+		src="${base}/assets/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="${base}/assets/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${base}/assets/js/worksSubmit.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.UserRoleFunctionMapper">
+	<resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Function">
+		<id column="function_id" jdbcType="INTEGER" property="functionId" />
+		<result column="function_name" jdbcType="VARCHAR" property="functionName" />
+		<result column="function_url" jdbcType="VARCHAR" property="functionUrl" />
+		<result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+		<result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		function_id, function_name, function_url, gmt_create,
+		gmt_modified
+	</sql>
+	<!-- 根据userID查询对应的功能权限 -->
+	<select id="selectFunctionByUserId" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		function
+		WHERE function_id IN
+		(SELECT
+		function_id
+		FROM
+		role_function
+		WHERE role_id IN
+		(SELECT
+		role_id
+		FROM
+		user
+		WHERE user_id =
+		#{userId,jdbcType=BIGINT}))
+	</select>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Comment">
+    <id column="comment_id" jdbcType="BIGINT" property="commentId" />
+    <result column="student_number" jdbcType="INTEGER" property="studentNumber" />
+    <result column="comment_name" jdbcType="VARCHAR" property="commentName" />
+    <result column="comment_name_type" jdbcType="INTEGER" property="commentNameType" />
+    <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+    <result column="vote_type" jdbcType="INTEGER" property="voteType" />
+    <result column="production_id" jdbcType="BIGINT" property="productionId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    comment_id, student_number, comment_name, comment_name_type, comment_content, vote_type, 
+    production_id, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Comment">
+    insert into comment (comment_id, student_number, comment_name, 
+      comment_name_type, comment_content, vote_type, 
+      production_id, gmt_create, gmt_modified
+      )
+    values (#{commentId,jdbcType=BIGINT}, #{studentNumber,jdbcType=INTEGER}, #{commentName,jdbcType=VARCHAR}, 
+      #{commentNameType,jdbcType=INTEGER}, #{commentContent,jdbcType=VARCHAR}, #{voteType,jdbcType=INTEGER}, 
+      #{productionId,jdbcType=BIGINT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        comment_id,
+      </if>
+      <if test="studentNumber != null">
+        student_number,
+      </if>
+      <if test="commentName != null">
+        comment_name,
+      </if>
+      <if test="commentNameType != null">
+        comment_name_type,
+      </if>
+      <if test="commentContent != null">
+        comment_content,
+      </if>
+      <if test="voteType != null">
+        vote_type,
+      </if>
+      <if test="productionId != null">
+        production_id,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentId != null">
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="studentNumber != null">
+        #{studentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentName != null">
+        #{commentName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNameType != null">
+        #{commentNameType,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null">
+        #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="voteType != null">
+        #{voteType,jdbcType=INTEGER},
+      </if>
+      <if test="productionId != null">
+        #{productionId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Comment">
+    update comment
+    <set>
+      <if test="studentNumber != null">
+        student_number = #{studentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentName != null">
+        comment_name = #{commentName,jdbcType=VARCHAR},
+      </if>
+      <if test="commentNameType != null">
+        comment_name_type = #{commentNameType,jdbcType=INTEGER},
+      </if>
+      <if test="commentContent != null">
+        comment_content = #{commentContent,jdbcType=VARCHAR},
+      </if>
+      <if test="voteType != null">
+        vote_type = #{voteType,jdbcType=INTEGER},
+      </if>
+      <if test="productionId != null">
+        production_id = #{productionId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Comment">
+    update comment
+    set student_number = #{studentNumber,jdbcType=INTEGER},
+      comment_name = #{commentName,jdbcType=VARCHAR},
+      comment_name_type = #{commentNameType,jdbcType=INTEGER},
+      comment_content = #{commentContent,jdbcType=VARCHAR},
+      vote_type = #{voteType,jdbcType=INTEGER},
+      production_id = #{productionId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+</mapper>

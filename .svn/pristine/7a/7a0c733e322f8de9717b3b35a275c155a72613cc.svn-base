@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.UsersMapper">
+	<resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.User">
+		<id column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="salt" jdbcType="VARCHAR" property="salt" />
+		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="academy" jdbcType="VARCHAR" property="academy" />
+		<result column="major" jdbcType="VARCHAR" property="major" />
+		<result column="classs" jdbcType="VARCHAR" property="classs" />
+		<result column="student_number" jdbcType="INTEGER" property="studentNumber" />
+		<result column="account_status" jdbcType="INTEGER" property="accountStatus" />
+		<result column="startyear" jdbcType="INTEGER" property="startyear" />
+		<result column="enroll_type" jdbcType="INTEGER" property="enrollType" />
+		<result column="submit_status" jdbcType="INTEGER" property="submitStatus" />
+		<result column="role_id" jdbcType="BIGINT" property="roleId" />
+		<result column="frozen_type" jdbcType="INTEGER" property="frozenType" />
+		<result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+		<result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, email, password, salt, tel, user_name, sex,
+		academy, major, classs,
+		student_number,
+		account_status, startyear,
+		enroll_type, submit_status, role_id, frozen_type,
+		gmt_create,
+		gmt_modified
+	</sql>
+	<!-- 用户列表查询 -->
+	<!-- parameterType传入包装对象(包装了查询条件) resultType建议使用扩展对象 -->
+	<select id="findUserList" resultMap="BaseResultMap">
+		select user.* from user
+	</select>
+	<!-- 根据用户的属性查找用户 -->
+	<select id="select" parameterType="cn.edu.jxau.common.entity.User"
+		resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM user
+		<where>
+			<if test="email != null">
+				AND email = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="password != null">
+				AND password = #{password,jdbcType=VARCHAR}
+			</if>
+			<if test="tel != null">
+				AND tel = #{tel,jdbcType=VARCHAR}
+			</if>
+			<if test="userName != null">
+				AND user_name = #{userName,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				AND sex = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="academy != null">
+				AND academy = #{academy,jdbcType=VARCHAR}
+			</if>
+			<if test="major != null">
+				AND major = #{major,jdbcType=VARCHAR}
+			</if>
+			<if test="classs != null">
+				AND classs = #{classs,jdbcType=VARCHAR}
+			</if>
+			<if test="studentNumber != null">
+				AND student_number = #{studentNumber,jdbcType=INTEGER}
+			</if>
+			<if test="accountStatus != null">
+				AND account_status = #{accountStatus,jdbcType=INTEGER}
+			</if>
+			<if test="startyear != null">
+				AND startyear = #{startyear,jdbcType=INTEGER}
+			</if>
+			<if test="enrollType != null">
+				AND enroll_type = #{enrollType,jdbcType=INTEGER}
+			</if>
+			<if test="submitStatus != null">
+				AND submit_status = #{submitStatus,jdbcType=INTEGER}
+			</if>
+			<if test="roleId != null">
+				AND role_id = #{roleId,jdbcType=BIGINT}
+			</if>
+			<if test="frozenType != null">
+				AND frozen_type = #{frozenType,jdbcType=INTEGER}
+			</if>
+			<if test="gmtCreate != null">
+				AND gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="gmtModified != null">
+				AND gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</select>
+	<!-- 根据邮箱查询用户信息 -->
+	<select id="selectByEmail" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where email = #{email,jdbcType=VARCHAR}
+	</select>
+</mapper>

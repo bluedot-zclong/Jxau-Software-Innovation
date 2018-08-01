@@ -1,0 +1,27 @@
+package cn.edu.jxau.service;
+
+import cn.edu.jxau.common.entity.Production;
+import cn.edu.jxau.common.entity.User;
+import cn.edu.jxau.web.exception.CustomException;
+
+public interface CompetitionService {
+
+	/**
+	 * 报名大赛
+	 * 根据userId修改用户报名状态
+	 * 2017年12月30日
+	 * zclong
+	 * @param userId
+	 */
+	public void signUp(User user) throws CustomException;
+	
+	/**
+	 * 提交作品
+	 * 2017年12月30日
+	 * zclong
+	 * @param production
+	 */
+	public void uploadWorks(Production production);
+	
+	public Production queryProduction();
+}

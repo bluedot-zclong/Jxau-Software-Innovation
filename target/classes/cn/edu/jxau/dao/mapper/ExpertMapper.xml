@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.ExpertMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Expert">
+    <id column="expert_id" jdbcType="BIGINT" property="expertId" />
+    <result column="expert_name" jdbcType="VARCHAR" property="expertName" />
+    <result column="expert_number" jdbcType="INTEGER" property="expertNumber" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    expert_id, expert_name, expert_number, `password`, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from expert
+    where expert_id = #{expertId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from expert
+    where expert_id = #{expertId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Expert">
+    insert into expert (expert_id, expert_name, expert_number, 
+      `password`, gmt_create, gmt_modified
+      )
+    values (#{expertId,jdbcType=BIGINT}, #{expertName,jdbcType=VARCHAR}, #{expertNumber,jdbcType=INTEGER}, 
+      #{password,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Expert">
+    insert into expert
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="expertId != null">
+        expert_id,
+      </if>
+      <if test="expertName != null">
+        expert_name,
+      </if>
+      <if test="expertNumber != null">
+        expert_number,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="expertId != null">
+        #{expertId,jdbcType=BIGINT},
+      </if>
+      <if test="expertName != null">
+        #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertNumber != null">
+        #{expertNumber,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Expert">
+    update expert
+    <set>
+      <if test="expertName != null">
+        expert_name = #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertNumber != null">
+        expert_number = #{expertNumber,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where expert_id = #{expertId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Expert">
+    update expert
+    set expert_name = #{expertName,jdbcType=VARCHAR},
+      expert_number = #{expertNumber,jdbcType=INTEGER},
+      `password` = #{password,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where expert_id = #{expertId,jdbcType=BIGINT}
+  </update>
+</mapper>

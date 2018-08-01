@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.MemberMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Member">
+    <id column="member_id" jdbcType="BIGINT" property="memberId" />
+    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+    <result column="member_academy" jdbcType="VARCHAR" property="memberAcademy" />
+    <result column="member_major" jdbcType="VARCHAR" property="memberMajor" />
+    <result column="member_classs" jdbcType="VARCHAR" property="memberClasss" />
+    <result column="member_tel" jdbcType="VARCHAR" property="memberTel" />
+    <result column="member_email" jdbcType="VARCHAR" property="memberEmail" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="member_role" jdbcType="BIT" property="memberRole" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    member_id, member_name, member_academy, member_major, member_classs, member_tel, 
+    member_email, user_id, member_role, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from member
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Member">
+    insert into member (member_id, member_name, member_academy, 
+      member_major, member_classs, member_tel, 
+      member_email, user_id, member_role, 
+      gmt_create, gmt_modified)
+    values (#{memberId,jdbcType=BIGINT}, #{memberName,jdbcType=VARCHAR}, #{memberAcademy,jdbcType=VARCHAR}, 
+      #{memberMajor,jdbcType=VARCHAR}, #{memberClasss,jdbcType=VARCHAR}, #{memberTel,jdbcType=VARCHAR}, 
+      #{memberEmail,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{memberRole,jdbcType=BIT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Member">
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="memberName != null">
+        member_name,
+      </if>
+      <if test="memberAcademy != null">
+        member_academy,
+      </if>
+      <if test="memberMajor != null">
+        member_major,
+      </if>
+      <if test="memberClasss != null">
+        member_classs,
+      </if>
+      <if test="memberTel != null">
+        member_tel,
+      </if>
+      <if test="memberEmail != null">
+        member_email,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="memberRole != null">
+        member_role,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=BIGINT},
+      </if>
+      <if test="memberName != null">
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAcademy != null">
+        #{memberAcademy,jdbcType=VARCHAR},
+      </if>
+      <if test="memberMajor != null">
+        #{memberMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="memberClasss != null">
+        #{memberClasss,jdbcType=VARCHAR},
+      </if>
+      <if test="memberTel != null">
+        #{memberTel,jdbcType=VARCHAR},
+      </if>
+      <if test="memberEmail != null">
+        #{memberEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="memberRole != null">
+        #{memberRole,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Member">
+    update member
+    <set>
+      <if test="memberName != null">
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberAcademy != null">
+        member_academy = #{memberAcademy,jdbcType=VARCHAR},
+      </if>
+      <if test="memberMajor != null">
+        member_major = #{memberMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="memberClasss != null">
+        member_classs = #{memberClasss,jdbcType=VARCHAR},
+      </if>
+      <if test="memberTel != null">
+        member_tel = #{memberTel,jdbcType=VARCHAR},
+      </if>
+      <if test="memberEmail != null">
+        member_email = #{memberEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="memberRole != null">
+        member_role = #{memberRole,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Member">
+    update member
+    set member_name = #{memberName,jdbcType=VARCHAR},
+      member_academy = #{memberAcademy,jdbcType=VARCHAR},
+      member_major = #{memberMajor,jdbcType=VARCHAR},
+      member_classs = #{memberClasss,jdbcType=VARCHAR},
+      member_tel = #{memberTel,jdbcType=VARCHAR},
+      member_email = #{memberEmail,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      member_role = #{memberRole,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where member_id = #{memberId,jdbcType=BIGINT}
+  </update>
+</mapper>

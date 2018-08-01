@@ -1,0 +1,54 @@
+package cn.edu.jxau.common.entity;
+
+import java.util.Date;
+
+/**
+ * Maintenance -> maintenance
+ * 2018-02-11
+ */
+@lombok.Getter
+@lombok.Setter
+@lombok.EqualsAndHashCode(callSuper = false)
+public class Maintenance extends BaseEntity {
+    /**
+     * 维护编号
+     */
+    private Long maintenanceId;
+
+    /**
+     * 维护名称
+     */
+    private String maintenanceName;
+
+    /**
+     * 1：表示备份，0：表示恢复
+     */
+    private Integer maintenanceType;
+
+    /**
+     * 备份/恢复的内容
+     */
+    private String maintenanceContent;
+
+    /**
+     * 维护/备份的描述
+     */
+    private String maintenanceDescribe;
+
+    /**
+     * 操作是备份时,备份文件的路径(恢复没有)
+     */
+    private String maintenanceFileAddress;
+
+    /**
+     * 创建时间
+     */
+    private Date gmtCreate;
+
+    /**
+     * 最后修改时间
+     */
+    private Date gmtModified;
+
+    private static final long serialVersionUID = 1L;
+}

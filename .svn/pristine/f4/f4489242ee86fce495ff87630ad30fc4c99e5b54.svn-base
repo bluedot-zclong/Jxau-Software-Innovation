@@ -1,0 +1,50 @@
+package cn.edu.jxau.service;
+
+import java.util.List;
+
+import cn.edu.jxau.common.entity.Member;
+import cn.edu.jxau.web.exception.CustomException;
+
+public interface MemberService {
+
+	/**
+	 * 添加队员信息
+	 * 2017年12月28日
+	 * zclong
+	 * @param member
+	 */
+	 void addMember(Member member);
+	
+	/**
+	 * 根据用户id查询其队员信息
+	 * 2017年12月28日
+	 * zclong
+	 * @param userId
+	 * @return
+	 * @throws CustomException
+	 */
+	 List<Member> queryMemberByUserId(Long userId);
+	
+	/**
+	 * 根据memberId查询
+	 * 2017年12月28日
+	 * zclong
+	 * @param memberId
+	 * @return
+	 */
+	 Member queryMember(Long memberId);
+	
+	/**
+	 * 根据memberId修改用户信息
+	 * 2017年12月28日
+	 * zclong
+	 * @param member
+	 * @throws CustomException
+	 */
+	 void upateMember(Member member);
+	
+	/**
+	 * 删除队员
+	 */
+	 void removeMember(Long memberId);
+}

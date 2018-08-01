@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>报名系统 - 江西农业大学大学生软件设计大赛</title>
+
+<!-- Bootstrap core CSS -->
+<link href="${base}/assets/libs/bootstrap/3.3.7/css/bootstrap.css"
+	rel="stylesheet">
+</head>
+<body role="document">
+	<input type="hidden" id="base" value="${base}">
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href='<c:url value="/index.jsp"></c:url>'>首 页</a></li>
+					<!--<li><a href="#about">报名流程</a></li>-->
+					<!--<li><a href="#contact">注册队伍</a></li>-->
+					<li><a href="${base}/view/userInfo">个人主页</a></li>
+					<li><a href="${base}/logout">注销</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+	<div class="container theme-showcase" role="main">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="page-header">
+					<br /> <br />
+					<h2>
+						<font size="6" color="#000000">修改个人信息</font>
+					</h2>
+				</div>
+
+				<form action="${base}/user/modifyUser" method="post">
+					<div class="form-group ">
+						<label for="email">邮箱</label> <input name="email" type="email"
+							class="form-control" id="email" placeholder="电子邮箱"
+							value="${user_session.user.email}"/> <span id="errorSpan"
+							style="color: red;">${msg}</span> <span id="errorSpan"
+							style="color: red;">${errors.email }</span>
+					</div>
+					<div class="form-group ">
+						<label for="tel">联系电话</label> <input name="tel" type="text"
+							class="form-control" id="tel" value="${user_session.user.tel }" maxlength="11">
+						<span id="errorTel" style="color: red;">${errors.tel }</span>
+					</div>
+					<div class="form-group ">
+						<label for="name">姓名</label> <input name="userName" type="text"
+							class="form-control" id="userName" value="${user_session.user.userName }"> <span
+							id="errorName" style="color: red;">${errors.name }</span>
+					</div>
+					<div class="form-group ">
+						<label for="sex">性别</label> <select class="form-control"
+							name="sex" value="${user_session.user.sex }">
+							<#if user_session.user.sex==1>
+							<option value="男" selected>男</option>
+							<#elseif user_session.user.sex==0>
+							<option value="女" selected>女</option>
+							<#else>
+							<option value="保密" selected>保密</option></#if>
+						</select>
+					</div>
+					<div class="form-group ">
+						<div class="dropdown">
+							<label for="academy">院系</label>
+							 <!-- <select name="academy"
+								id="academy" class="form-control">
+								<option value="${user_session.user.academy }">${user_session.user.academy }</option>
+							</select> -->
+							<input name="academy" type="text" class="form-control" id="academy" placeholder="例：软件学院" value="${user_session.user.academy }">
+						</div>
+					</div>
+					<div class="form-group ">
+						<label for="major">专业</label> 
+						<!-- <select name="major" id="major"
+							class="form-control" value="${user_session.user.major }">
+							<option value="${user_session.user.major }">${user_session.user.major }</option>
+						</select> -->
+						<input name="major" type="text"
+							class="form-control" id="major" value="${user_session.user.major }">
+					</div>
+					<div class="form-group ">
+						<label for="classs">班级</label> <input name="classs" type="text"
+							class="form-control" id="classs" placeholder="例：1503"
+							value="${user_session.user.classs }" > <span
+							id="errorClass" style="color: red;">${errors.classs }</span>
+					</div>
+					<div class="form-group ">
+						<label for="sid">学号</label> <input name="studentNumber" type="text"
+							class="form-control" id="sid" placeholder="例：20151973"
+							value="${user_session.user.studentNumber }" maxlength="8" disabled="true"> <span id="errorSid"
+							style="color: red;">${errors.sid }</span>
+					</div>
+					<!-- <div class="form-group ">
+						<label for="startyear">入学年份</label><select class="form-control"
+							name="startyear" value="${user_session.user.startyear }">
+							<option value="${user_session.user.startyear }" selected>${user_session.user.startyear
+								}</option>
+						</select>
+					</div> -->
+					<div class="form-group">
+						<button  type="button" id="modifyInfo"
+							class="btn btn-primary">修改</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="${base}/assets/libs/jquery/1.12.4/jquery.js"></script>
+	<script type="text/javascript"
+		src="${base}/assets/libs/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<script type="text/javascript" src="${base}/assets/js/modify.js"></script>
+</body>
+</html>

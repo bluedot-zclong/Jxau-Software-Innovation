@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.jxau.dao.mapper.ProductionMapper">
+  <resultMap id="BaseResultMap" type="cn.edu.jxau.common.entity.Production">
+    <id column="production_id" jdbcType="BIGINT" property="productionId" />
+    <result column="production_type" jdbcType="VARCHAR" property="productionType" />
+    <result column="production_name" jdbcType="VARCHAR" property="productionName" />
+    <result column="production_content" jdbcType="VARCHAR" property="productionContent" />
+    <result column="production_path" jdbcType="VARCHAR" property="productionPath" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="production_poll" jdbcType="INTEGER" property="productionPoll" />
+    <result column="is_pass" jdbcType="INTEGER" property="isPass" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    production_id, production_type, production_name, production_content, production_path, 
+    user_id, production_poll, is_pass, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from production
+    where production_id = #{productionId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from production
+    where production_id = #{productionId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.edu.jxau.common.entity.Production">
+    insert into production (production_id, production_type, production_name, 
+      production_content, production_path, user_id, 
+      production_poll, is_pass, gmt_create, 
+      gmt_modified)
+    values (#{productionId,jdbcType=BIGINT}, #{productionType,jdbcType=VARCHAR}, #{productionName,jdbcType=VARCHAR}, 
+      #{productionContent,jdbcType=VARCHAR}, #{productionPath,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{productionPoll,jdbcType=INTEGER}, #{isPass,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.jxau.common.entity.Production">
+    insert into production
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productionId != null">
+        production_id,
+      </if>
+      <if test="productionType != null">
+        production_type,
+      </if>
+      <if test="productionName != null">
+        production_name,
+      </if>
+      <if test="productionContent != null">
+        production_content,
+      </if>
+      <if test="productionPath != null">
+        production_path,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="productionPoll != null">
+        production_poll,
+      </if>
+      <if test="isPass != null">
+        is_pass,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productionId != null">
+        #{productionId,jdbcType=BIGINT},
+      </if>
+      <if test="productionType != null">
+        #{productionType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionName != null">
+        #{productionName,jdbcType=VARCHAR},
+      </if>
+      <if test="productionContent != null">
+        #{productionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="productionPath != null">
+        #{productionPath,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="productionPoll != null">
+        #{productionPoll,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        #{isPass,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.jxau.common.entity.Production">
+    update production
+    <set>
+      <if test="productionType != null">
+        production_type = #{productionType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionName != null">
+        production_name = #{productionName,jdbcType=VARCHAR},
+      </if>
+      <if test="productionContent != null">
+        production_content = #{productionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="productionPath != null">
+        production_path = #{productionPath,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="productionPoll != null">
+        production_poll = #{productionPoll,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        is_pass = #{isPass,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where production_id = #{productionId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.jxau.common.entity.Production">
+    update production
+    set production_type = #{productionType,jdbcType=VARCHAR},
+      production_name = #{productionName,jdbcType=VARCHAR},
+      production_content = #{productionContent,jdbcType=VARCHAR},
+      production_path = #{productionPath,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      production_poll = #{productionPoll,jdbcType=INTEGER},
+      is_pass = #{isPass,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where production_id = #{productionId,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 作品列表查询 -->
+	<!-- parameterType传入包装对象(包装了查询条件) resultType建议使用扩展对象 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		select production.* from production
+	</select>
+	
+  <!-- 根据用户id进更新作品，每个用户只有一个作品 -->
+  <update id="updateByUserIdSelective" parameterType="cn.edu.jxau.common.entity.Production">
+    update production
+    <set>
+      <if test="productionType != null">
+        production_type = #{productionType,jdbcType=VARCHAR},
+      </if>
+      <if test="productionName != null">
+        production_name = #{productionName,jdbcType=VARCHAR},
+      </if>
+      <if test="productionContent != null">
+        production_content = #{productionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="productionPath != null">
+        production_path = #{productionPath,jdbcType=VARCHAR},
+      </if>
+      <if test="productionPoll != null">
+        production_poll = #{productionPoll,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        is_pass = #{isPass,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

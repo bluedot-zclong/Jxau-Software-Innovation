@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<body >
+	用户列表：<br/>
+	<table width="100%" border=1>
+		<tr>
+			<td>姓名</td>
+			<td>学号</td>
+			<td>邮箱</td>
+			<td>院系</td>
+			<td>专业</td>
+			<td>操作</td>
+		</tr>
+		<#list userList as user>
+			<tr>
+				<td>${user.userName }</td>
+				<td>${user.studentNumber }</td>
+				<td>${user.email }</td>
+				<td>${user.academy }</td>
+				<td>${user.major }</td>
+				<td><a href="userView/${user.userId}">修改</a></td>
+			</tr>
+		</#list>
+	</table>
+</body>
+</html>

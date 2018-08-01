@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <properties resource="sql/db.properties"/>
+
+    <!-- defaultModelType="conditional/flat" -->
+    <!-- 
+    	autoDelimitKeywords：当表名或者字段名为SQL关键字的时候，可以设置该属性为true，MBG会自动给表名或字段名添加**分隔符**
+     -->
+    <context id="JDBC" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!-- 自定义插件生成 -->
+        <plugin type="cn.edu.jxau.dao.mybatis.MybatisMapperPlugin">
+            <property name="mappers" value="cn.edu.jxau.dao.mapper.base.Mapper"/>
+            <property name="generatedGetSet" value="false"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}" userId="${jdbc.username}"
+                        password="${jdbc.password}"/>
+		<!-- 
+			用来指定JDBC类型和Java类型如何转换
+		 -->
+        <javaTypeResolver type="cn.edu.jxau.dao.mybatis.JavaTypeResolverDefault">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+		<!-- 
+			用来控制生成的实体类
+			targetPackage:生成实体类存放的包名，一般就是放在该包下
+			targetProject:指定目标项目路径，可以是绝对路径或相对路径（如 targetProject="src/main/java"）
+			rootClass:设置所有实体类的基类
+		 -->
+        <javaModelGenerator targetPackage="cn.edu.jxau.common.entity" targetProject=".\src\main\java">
+            <property name="rootClass" value="cn.edu.jxau.common.entity.BaseEntity"/>
+        </javaModelGenerator>
+		
+		<!-- 
+			生成XML的SQL映射文件和实体类
+			targetPackage：生成实体类存放的包名，一般就是放在该包下
+			targetProject:指定目标项目路径，可以是绝对路径或相对路径（如 targetProject="src/main/resources"）
+		 -->
+        <sqlMapGenerator targetPackage="cn.edu.jxau.dao.mapper" targetProject=".\src\main\java"/>
+		<!-- 
+			如果不配置该元素，就不会生成Mapper接口
+			这个属性对于通用Mapper来说，可以让生成的所有接口都继承该接口。
+		 -->
+        <javaClientGenerator targetPackage="cn.edu.jxau.dao.mapper" targetProject=".\src\main\java" type="XMLMAPPER"/>
+
+		<!-- 
+			将数据库中的字段重命名为实体类的属性
+			column 数据库中字段名
+			property POJO属性名
+			javaType POJO类型
+			jdbcType 数据库字段类型
+			generatedKey：用来指定自动生成主键的属性
+		 -->
+        
+        <table tableName="%" enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="false">
+        </table>
+    </context>
+
+</generatorConfiguration>

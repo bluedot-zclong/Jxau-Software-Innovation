@@ -1,0 +1,187 @@
+
+//去掉二边的空格
+function trim(str){"  zhaojun  "
+	str = str.replace(/^\s*/,"");// "zhaojun "
+	str = str.replace(/\s*$/,"");// "zhaojun"
+	return str; 	
+}
+				
+var emailText = "";		
+var telText = "";
+var nameText = "";
+var classText = "";
+var sidText = "";
+		
+
+	
+	window.onload = function() {// 文档加载完毕后执行
+		/* 对电子邮箱的验证 */
+		$("#email").blur(function(){
+			  var email = $("#email").val();
+			  email = trim(email);
+			  var span = $("#errorSpan");
+			  if(email.length == 0){
+				  // 得到span元素
+				  span.html("邮箱不能为空");				  
+			  }else{
+				  $.post(getRootPath_web() +　"/ModifyServlet?method=modifyEmail",
+				  {
+					email: email
+				  },
+				  function(text){
+					  
+						if (text == "1") {
+							// 得到span元素
+							span.html("邮箱不能为空");
+						} else if (text == "2"){
+							span.html("邮箱格式错误");
+						} else if (text == "3"){
+							span.html("该邮箱已被注册！");
+						} else {
+							span.html("");
+							emailText = text;
+						}
+				  });
+		     }
+		});
+		
+		
+		/* 对电话号码的验证 */
+		$("#tel").blur(function(){
+			
+		 var tel = $("#tel").val();
+		 tel = trim(tel);
+		  var span = $("#errorTel");
+		  if(tel.length == 0){
+			  // 得到span元素
+			  span.html("号码不能为空");				  
+		  }else{
+			  $.post(getRootPath_web() +　"/ModifyServlet?method=modifyTel",
+			  {
+				  tel: $("#tel").val()
+			  },
+			  function(text){
+					if (text == "1") {
+						// 得到span元素
+						span.html("号码不能为空!");
+					} else if (text == "2"){
+						span.html("请输入正确的电话号码！");
+					} else {
+						span.html("");
+						telText = text;
+					}
+			  });
+		  }
+		});
+		
+		/* 对姓名的验证 */
+		$("#name").blur(function(){
+			var name = $("#name").val();
+			name = trim(name);
+			var span = $("#errorName");
+			  if(name.length == 0){
+				  // 得到span元素
+				  span.html("姓名不能为空");				  
+			  }else{
+			  $.post(getRootPath_web() +　"/ModifyServlet?method=modifyName",
+			  {
+				  name: $("#name").val()
+			  },
+			  function(text){
+				  
+					if (text == "1") {
+						// 得到span元素
+						span.html("姓名不能为空!");
+					} else if (text == "2"){
+						span.html("请输入真实姓名！");
+					} else {
+						span.html("");
+						nameText = text;
+					}
+			  });
+			  }
+		});
+		
+		/* 对班级的验证 */
+		$("#classs").blur(function(){
+			var classs = $("#classs").val();
+			classs = trim(classs);
+			var span = $("#errorClass");
+			  if(classs.length == 0){
+				  // 得到span元素
+				  span.html("班级不能为空");				  
+			  }else{
+			  $.post(getRootPath_web() +　"/ModifyServlet?method=modifyClass",
+			  {
+				  classs: $("#classs").val()
+			  },
+			  function(text){
+				  
+					if (text == "1") {
+						// 得到span元素
+						span.html("班级不能为空!");
+					} else if (text == "2"){
+						span.html("请按格式输入！");
+					} else {
+						span.html("");
+						classText = text;
+					}
+			  });
+			  }
+		});
+		
+		/* 对学号的验证 */
+		$("#sid").blur(function(){
+			var sid = $("#sid").val();
+			sid = trim(sid);
+			 var span = $("#errorSid");
+			  if(sid.length == 0){
+				  // 得到span元素
+				  span.html("学号不能为空");				  
+			  }else{
+			  $.post(getRootPath_web() +　"/ModifyServlet?method=modifySid",
+			  {
+				  sid: $("#sid").val()
+			  },
+			  function(text){
+				 
+					if (text == "1") {
+						// 得到span元素
+						span.html("学号不能为空!");
+					} else if (text == "2"){
+						span.html("请按格式输入！");
+					} else {
+						span.html("");
+						sidText = text;
+					}
+			  });
+			  }
+		});
+		
+		// 修改
+		/*
+		 * $("#btn").click(function(){
+		 * if(emailText+telText+nameText+classText+sidText== "1010101010"){
+		 * return true; } return false;
+		 * 
+		 * });
+		 */
+		
+function getRootPath_web() { // http://127.0.0.1:8020/codeforum
+			
+			// 获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+			var curWwwPath = window.document.location.href;
+			// 获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+			var pathName = window.document.location.pathname;
+			var pos = curWwwPath.indexOf(pathName);
+			// 获取主机地址，如： http://localhost:8083
+			var localhostPaht = curWwwPath.substring(0, pos);
+			// 获取带"/"的项目名，如：/uimcardprj
+			var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+			return(localhostPaht + projectName);
+		}
+		
+	};
+	
+	
+	

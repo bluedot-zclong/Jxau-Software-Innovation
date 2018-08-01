@@ -1,0 +1,166 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+		 ">
+
+	<!-- 可以扫描controller、service、... 这里让扫描controller，指定controller的包 -->
+	<context:component-scan base-package="cn.edu.jxau.web" />
+
+	<!-- 静态资源解析 包括 ：js、css、img、..  cache-period="604800" 静态资源缓存7天-->
+	<mvc:resources mapping="/assets/**" location="/assets/" />
+	<mvc:default-servlet-handler />
+
+	<!-- 开启aop，对类代理 -->
+	<aop:config proxy-target-class="true"></aop:config>
+	<!-- 开启shiro注解支持，进行权限管理 -->
+	<!-- <bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean> -->
+	
+	<!--注解映射器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/> -->
+	<!--注解适配器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> -->
+
+	<!-- 使用 mvc:annotation-driven代替上边注解映射器和注解适配器配置 mvc:annotation-driven默认加载很多的参数绑定方法， 
+		比如json转换解析器就默认加载了，如果使用mvc:annotation-driven不用配置上边的RequestMappingHandlerMapping和RequestMappingHandlerAdapter 
+		实际开发时使用mvc:annotation-driven -->
+	<mvc:annotation-driven conversion-service="myConversionService"></mvc:annotation-driven>
+
+
+	<!-- FreeMarker视图解析器 -->
+	<bean id="freeMarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass" value="cn.edu.jxau.web.util.BasePathFreeMarkerView" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html; charset=utf-8" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="false" />
+		<property name="exposeSpringMacroHelpers" value="false" />
+		<!-- <#assign base=(request.contextPath!"") /> -->
+		<!--<property name="requestContextAttribute" value="request"/> -->
+	</bean>
+
+	<!-- FreeMarker的配置 -->
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPaths" value="/WEB-INF/pages/" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="number_format">#.##</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<!--此属性可以防止模板解析空值时的错误 -->
+				<prop key="classic_compatible">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 自定义参数绑定 -->
+	<bean id="myConversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<!-- 转换器 -->
+		<property name="converters">
+			<list>
+				<!-- 日期类型转换 -->
+				<bean class="cn.edu.jxau.web.util.CustomDateConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 视图页面配置 -->
+    <util:properties id="views" value-type="java.util.Properties" location="classpath:views.properties"/>
+    <bean id="indexController" class="cn.edu.jxau.web.controller.IndexController">
+        <property name="views" ref="views"/>
+    </bean>
+
+	<!-- 全局异常处理器 只要实现HandlerExceptionResolver接口就是全局异常处理器 -->
+	<bean class="cn.edu.jxau.web.exception.CustomExceptionResolver"></bean>
+
+
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为5MB -->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
+    
+	<!--拦截器 -->
+	<!-- <mvc:interceptors>
+		多个拦截器,顺序执行
+		重复提交拦截器，需要在验证的controller方法上写上自定义注解即可
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="cn.edu.jxau.web.interceptor.TokenInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	
+	<!-- <mvc:interceptors>
+		多个拦截器,顺序执行
+		登陆认证拦截器 拦截除了exceptUrls内的所有请求
+		<mvc:interceptor>
+			/**表示所有url包括子url路径
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="cn.edu.jxau.web.interceptor.LoginInterceptor">
+				<property name="exceptUrls">
+					<list>
+						<value>/</value>
+						<value>/user/login</value>
+						<value>/user/register</value>
+						<value>/user/userInfo</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+		重复提交拦截器，页面不需要任何传入，只需要在验证的controller方法上写上自定义注解即可
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="cn.edu.jxau.web.interceptor.SameUrlDataInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>-->
+	
+	<!-- Shiro注解相关配置 -->
+    <!-- 生命周期处理器 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run: -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+	
+
+</beans>
