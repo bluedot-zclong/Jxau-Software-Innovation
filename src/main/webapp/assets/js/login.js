@@ -39,15 +39,11 @@ var manageLogin = {
 	            type: "POST",
 	            success:function(data){ 
 	            	var msg = data.msg;
-	            	var role = msg.substring(msg.length-1);
-	            	msg = msg.substring(0, msg.length-1);
+//	            	var role = msg.substring(msg.length-1);
+//	            	msg = msg.substring(0, msg.length-1);
 	            	alert(msg);
 	                if (data.success) {
-	                	if(role == "t") {
-	                		window.location.href = $("#base").val() + '/view/zindex';
-	                	}else{
-	                		window.location.href = $("#base").val() + '/view/userInfo';
-	                	}
+	                	window.location.href = $("#base").val() + '/view/userInfo';
 					} else {
 						// 刷新验证码
 		                $("#captcha")[0].click();

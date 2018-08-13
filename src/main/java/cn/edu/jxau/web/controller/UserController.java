@@ -108,7 +108,7 @@ public class UserController extends BaseController{
 		loginUser.setSalt(null);
 
 		saveSessionUser(loginUser, req.getSession());
-		return renderSuccess(loginUser.getUserName() + "登录成功" + (loginUser.getRoleId()==3?"t":"f"));
+		return renderSuccess(loginUser.getUserName() + "登录成功");
 	}
     
 	/**
