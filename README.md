@@ -1,9 +1,6 @@
 # Jxau-Software-Innovation
 江西农业大学软件创新大赛官网
 
-第一版本地址：
-https://gitee.com/zclong/MST.git
-
 
 ## 项目背景与开发目的
 -  作为大赛管理的一个步骤，大赛报名具有相当程度的重要性，但由于报名信息、数据过于庞杂导致了报名工作的烦琐和难以管理，传统的手工管理不仅存在着查询困难、不易更新的缺点，而且在人力物力上又耗费极大。伴随着Internet技术的飞速发展和信息化进程的迅猛发展，快捷方便的网络应用为人们的工作、交流提供了方便而又广阔的平台，同时也为大赛报名提供了一个新的渠道——网上报名。
@@ -46,10 +43,9 @@ https://gitee.com/zclong/MST.git
 
 - 导入项目前
 
-1.用SVN/Git客户端检出项目
+1.用Git客户端检出项目
 ```
-Git: https://gitee.com/zclong/Software-Innovation.git
-SVN: svn://gitee.com/zclong/Software-Innovation
+Git: https://github.com/bluedot-zclong/Jxau-Software-Innovation.git
 ```
 
 2.导入eclipse/IDEA/myeclipse,选中项目右键选择Maven->Update Project...
